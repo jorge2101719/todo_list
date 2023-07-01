@@ -15,8 +15,8 @@ function renderTareas() {
         <tr>
             <td>${tarea.id}</td>
             <td>${tarea.nombre}</td>
-            <td><input type='checkbox'></td>
-            <td><button id='btnBorrar' onclick="borrar(${tarea.id})">Borrar Tarea</button></td>
+            <td><input type='checkbox' onclick='checkClick()'></td>
+            <td><button id='btnBorrar' onclick='borrar(${tarea.id})'>Borrar Tarea</button></td>
         </tr>
     `;
     }
@@ -26,6 +26,20 @@ function renderTareas() {
 function totalTareas () {
     contarTareas = tareas.length;
     total.innerHTML = contarTareas;
+}
+
+function checkClick () {
+    // let checkBox = document.getElementById("myCheck");
+    // let text = document.getElementById("text");
+    if (realizadas.checked == true) {
+        contarRealizadas = contarRealizadas + 1;
+        realizadas.innerHTML = contarRealizadas;
+        // text.style.display = "block";
+    } else {
+        // text.style.display = "none";
+        contarRealizadas = contarRealizadas - 1;
+        realizadas.innerHTML = contarRealizadas;
+    }
 }
 
 agregar.addEventListener('click', function () {
