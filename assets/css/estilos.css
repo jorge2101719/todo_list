@@ -1,0 +1,28 @@
+body {
+    background-color: gray;
+}
+
+#ingreso_tareas {
+    display: flex;
+    justify-content: start;
+    gap: 10px;
+}
+
+#campo_input {
+    width: 40%;
+}
+
+#agregar {
+    font-size: 1.1rem;
+    color: white;
+    padding: 10px;
+    background-color: green;
+    border: 1px solid green;
+    border-radius: 10px;
+}
+
+#info_tareas {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
