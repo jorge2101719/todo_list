@@ -8,12 +8,32 @@ let contarRealizadas = 0;
 
 const tareas = [];
 
-agregar.addEventListener('click', function () {
-    console.log('click en agregar');
-    // console.log(campoIinput.value)
-    while (tareaInput.value === '') {
-        alert('Está tratando de ingresar una tarea vacía, por favor corriga ese detalle')
+function renderTareas() {
+    let html = '';
+    for (let tarea of tareas) {
+        html += `
+        <tr>
+            <td>${tarea.id}</td>
+            <td>${tarea.nombre}</td>
+            <td><input type='checkbox'></td>
+            <td><button id='btnBorrar' onclick="borrar(${tarea.id})">Borrar Tarea</button></td>
+        </tr>
+    `;
     }
+    cuerpoTabla.innerHTML = html;   
+}
+
+function totalTareas () {
+    contarTareas = tareas.length;
+    total.innerHTML = contarTareas;
+}
+
+agregar.addEventListener('click', function () {
+    // console.log('click en agregar');
+    // console.log(campoIinput.value)
+    if (tareaInput.value === '') {
+        alert('Está tratando de ingresar una tarea vacía, por favor corriga ese detalle')
+    } else {
 
     let nueva_tarea = tareaInput.value;
     tareas.push({
@@ -22,21 +42,19 @@ agregar.addEventListener('click', function () {
     });
     tareaInput.value = '';
 
-    let html = ''
-
-    for (let tarea of tareas) {
-        html += `
-            <tr>
-                <td>${tarea.id}</td>
-                <td>${tarea.nombre}</td>
-                <td><button id='btnBorrar'>Borrar Tarea</button></td>
-            </tr>
-        `;
-    }
-
-    cuerpoTabla.innerHTML = html;
-
-    contarTareas = tareas.length;
-    total.innerHTML = contarTareas;
-    total.innerHTML
+    renderTareas();
+    totalTareas();
+    
+}
 })
+
+
+
+function borrar(id) {
+    const index = tareas.findIndex((ele) => ele.id == id);
+    tareas.splice(index, 1);
+    // console.log(id, index)
+
+    renderTareas();
+    totalTareas();
+}
