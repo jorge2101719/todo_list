@@ -12,13 +12,13 @@ function renderTareas() {
     let html = '';
     for (let tarea of tareas) {
         html += `
-        <tr>
-            <td>${tarea.id}</td>
-            <td>${tarea.nombre}</td>
-            <td><input type='checkbox' onclick='checkClick()'></td>
-            <td><button id='btnBorrar' onclick='borrar(${tarea.id})'>Borrar Tarea</button></td>
-        </tr>
-    `;
+            <tr>
+                <td>${tarea.id}</td>
+                <td>${tarea.nombre}</td>
+                <td><input type='checkbox' id='checkInput' onclick='checkClick()'></td>
+                <td><button id='btnBorrar' onclick='borrar(${tarea.id})'>Borrar Tarea</button></td>
+            </tr>
+        `;
     }
     cuerpoTabla.innerHTML = html;   
 }
@@ -29,15 +29,18 @@ function totalTareas () {
 }
 
 function checkClick () {
-    // let checkBox = document.getElementById("myCheck");
+    let checkBox = document.getElementById("checkInput");
     // let text = document.getElementById("text");
-    if (realizadas.checked == true) {
+    // let contarRealizadas = 0;
+    if (checkBox.checked == true) {
         contarRealizadas = contarRealizadas + 1;
+        console.log(contarRealizadas);
         realizadas.innerHTML = contarRealizadas;
         // text.style.display = "block";
     } else {
         // text.style.display = "none";
         contarRealizadas = contarRealizadas - 1;
+        console.log(contarRealizadas);
         realizadas.innerHTML = contarRealizadas;
     }
 }
@@ -65,7 +68,8 @@ agregar.addEventListener('click', function () {
 function borrar(id) {
     const index = tareas.findIndex((ele) => ele.id == id);
     tareas.splice(index, 1);
-    // console.log(id, index)
+    // contarRealizadas = contarRealizadas - 1;
+    // realizadas.innerHTML = contarRealizadas
 
     renderTareas();
     totalTareas();
