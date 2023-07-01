@@ -1,5 +1,6 @@
 body {
     background-color: gray;
+    font-size: 1.1rem;
 }
 
 #ingreso_tareas {
@@ -12,8 +13,8 @@ body {
     width: 40%;
 }
 
-#agregar {
-    font-size: 1.1rem;
+#agregar, #btnBorrar {
+    font-size: 1rem;
     color: white;
     padding: 10px;
     background-color: green;
