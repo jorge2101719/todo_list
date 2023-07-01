@@ -29,6 +29,7 @@ agregar.addEventListener('click', function () {
             <tr>
                 <td>${tarea.id}</td>
                 <td>${tarea.nombre}</td>
+                <td><button>Borrar Tarea</button></td>
             </tr>
         `;
     }
