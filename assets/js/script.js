@@ -35,20 +35,18 @@ agregar.addEventListener('click', function () {
         alert('Está tratando de ingresar una tarea vacía, por favor corriga ese detalle')
     } else {
 
-    let nueva_tarea = tareaInput.value;
-    tareas.push({
-        id: Date.now(),
-        nombre: nueva_tarea
-    });
-    tareaInput.value = '';
+        let nueva_tarea = tareaInput.value;
+        tareas.push({
+            id: Date.now(),
+            nombre: nueva_tarea
+        });
+        tareaInput.value = '';
 
-    renderTareas();
-    totalTareas();
+        renderTareas();
+        totalTareas();
     
-}
+    }
 })
-
-
 
 function borrar(id) {
     const index = tareas.findIndex((ele) => ele.id == id);
