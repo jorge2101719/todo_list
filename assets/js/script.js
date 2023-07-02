@@ -6,23 +6,23 @@ let cuerpoTabla = document.querySelector('#cuerpo_tabla');
 let contarTareas = 0;
 let contarRealizadas = 0;
 let tablaTareas = document.querySelector('#tabla_tareas')
-let estadoTarea = false
+//  let estadoTarea = false
 
 const tareas = [
     {
         id: 16,
         nombre: 'Ir al mercado',
-        estado: estadoTarea,
+        estado: false,
     },
     {
         id: 60,
         nombre: 'Estudiar',
-        estado: estadoTarea,
+        estado: false,
     },
     {
         id: 24,
         nombre: 'Pasear al perro',
-        estado: estadoTarea,
+        estado: false,
     }
 ];
 
@@ -55,9 +55,7 @@ function checkClick (id) {
         estado: tareaCliqueada.estado == true ? false : true,
     }
 
-    let tareasRealizadas = tareas.filter((tarea) => tarea.estado === true);
-    contarRealizadas = tareasRealizadas.length;
-    realizadas.innerHTML = contarRealizadas;
+    tareasHechas();
 }
 
 function totalTareas () {
@@ -65,22 +63,32 @@ function totalTareas () {
     total.innerHTML = contarTareas;
 }
 
+function tareasHechas () {
+    let tareasRealizadas = tareas.filter((tarea) => tarea.estado === true);
+    contarRealizadas = tareasRealizadas.length;
+    realizadas.innerHTML = contarRealizadas;
+    
+}
+
 agregar.addEventListener('click', function () {
     if (tareaInput.value === '') {
         alert('Está tratando de ingresar una tarea vacía, por favor corriga ese detalle')
     } else {
         let nueva_tarea = tareaInput.value;
-        estadoTarea = tareas.estado;
+        estadoNuevaTarea = false;
+        console.log('el estado de la nueva tarea  es ',estadoNuevaTarea)
         tareas.push({
             id: Date.now(),
             nombre: nueva_tarea,
-            estado: estadoTarea,
+            estado: estadoNuevaTarea,
         });
 
         tareaInput.value = '';
 
         renderTareas();
         totalTareas();
+
+        tareasHechas();
     }
 })
 
@@ -90,5 +98,7 @@ function borrar(id) {
 
     renderTareas();
     totalTareas();
+
+    tareasHechas();
 }
 
