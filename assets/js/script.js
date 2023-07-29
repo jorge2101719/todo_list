@@ -1,100 +1,104 @@
-let tareaInput = document.querySelector('#tarea_input');
-let agregar = document.querySelector('#agregar');
-let total = document.querySelector('#total');
+let forma = document.querySelector('#forma');
+let nuevaTarea = document.querySelector('#nuevaTarea');
+let totalTareas = document.querySelector('#totalTareas');
 let realizadas = document.querySelector('#realizadas');
-let tablaTareas = document.querySelector('#tabla_tareas');
-let cuerpoTabla = document.querySelector('#cuerpo_tabla');
-let contarTareas = 0;
-let contarRealizadas = 0;
+let listaDeTareas = document.querySelector('#listaDeTareas');
+
 
 const tareas = [
     {
         id: 1,
         nombre: 'Ir al mercado',
-        estado: false,
+        // hecho: false,
     },
     {
         id: 2,
         nombre: 'Estudiar',
-        estado: false,
+        // hecho: false,
     },
     {
         id: 3,
         nombre: 'Pasear al perro',
-        estado: false,
+        // hecho: false,
     }
 ];
 
-renderTareas(tareas);
-totalTareas();
+renderTareas();
 
-function renderTareas(tareas) {
-    let html = '';
-    html = tareas.map(
-        (tarea) => 
-            `<tr id=${tarea.id}>
-                <td>${tarea.id}</td>
-                <td>${tarea.nombre}</td>
-                <td><input onclick='checkClick(${tarea.id})' type='checkbox' id='${tarea.id}' name='${tarea.id}'></td>
-                <td><button onclick='borrar(${tarea.id})' id='btnBorrar'>Borrar Tarea</button></td>
-            </tr>
-        `
-    ).join('');
+function renderTareas() {
+    listaDeTareas.innerHTML = '';
+    tareas.forEach((tarea) => {
+        const isChecked = tarea.hecho ? 'checked' : '';
+        listaDeTareas.innerHTML += `<tr id=${tarea.id}>
+            <td>
+                ${tarea.id}
+            </td>
+            <td>
+                ${tarea.nombre}
+            </td>
+            <td>
+                <input class='check' type='checkbox' ${isChecked} data-id='${tarea.id}'>
+            </td>
+            <td>
+                <button onclick='borrar(${tarea.id})'>Borrar Tarea</button>
+            </td>
+        </tr>
+        `;
+    });
 
-    cuerpoTabla.innerHTML = html;   
+    totalTareas.innerHTML = tareas.length;
+    realizadas.innerHTML = getCheckedCount();
 }
 
-function checkClick (id) {
-    let indexTarea = tareas.findIndex((tarea) => tarea.id == id);
-    let tareaCliqueada = tareas.find((tarea) => tarea.id == id);
-
-    tareas[indexTarea] = {
-        id: tareaCliqueada.id,
-        nombre: tareaCliqueada.nombre,
-        estado: tareaCliqueada.estado === true ? false : true,
-    }
-    
-    tareasHechas();
-}
-
-function totalTareas () {
-    contarTareas = tareas.length;
-    total.innerHTML = contarTareas;
-}
-
-function tareasHechas () {
-    let tareasRealizadas = tareas.filter((tarea) => tarea.estado === true);
-    contarRealizadas = tareasRealizadas.length;
-    realizadas.innerHTML = contarRealizadas;
-}
-
-agregar.addEventListener('click', function () {
-    if (tareaInput.value === '') {
-        alert('Está tratando de ingresar una tarea vacía, por favor corriga ese detalle')
-    } else {
-        let nueva_tarea = tareaInput.value;
-        let estadoNuevaTarea = false;
-        // console.log('el estado de la nueva tarea  es ',estadoNuevaTarea)
+forma.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (nuevaTarea.value.trim() !== '') {
+        let tareaParaAgregar = nuevaTarea.value.trim();
         tareas.push({
             id: Date.now(),
-            nombre: nueva_tarea,
-            estado: estadoNuevaTarea,
+            nombre: tareaParaAgregar,
+            hecho: false,
         });
-
-        tareaInput.value = '';
-
-        renderTareas(tareas);
-        totalTareas();
-        tareasHechas();
+        renderTareas();
+        nuevaTarea.value = '';
+    } else {
+        alert('Está tratando de ingresar una tarea vacía. Por favor corrija ese detalle')
     }
-})
+});
 
 function borrar(id) {
     let indexTarea = tareas.findIndex((tarea) => tarea.id == id);
-    tareas.splice(indexTarea, 1);
-    
-    renderTareas(tareas);
-    totalTareas();
-    tareasHechas();
+    if(indexTarea !== -1) {
+        tareas.splice(indexTarea, 1)
+    };
+    renderTareas();
+};
+
+listaDeTareas.addEventListener('change', (e) => {
+    if(e.target.classList.contains("check")) {
+        let tareaId = e.target.dataset.id;
+        toggleTareaHecho(tareaId);
+        renderTareas();
+    }
+});
+
+function toggleTareaHecho(id) {
+    const tarea = tareas.find((tarea) => tarea.id == id);
+    if (tarea) {
+        tarea.hecho = !tarea.hecho;
+    }
 }
 
+function getCheckedCount() {
+    let contador = 0;
+    const checkboxes = document.querySelectorAll('.check');
+    checkboxes.forEach((checkbox) => {
+        if(checkbox.checked) {
+            contador++;
+        }
+    });
+    console.log(contador);
+    return contador;
+}
+
+renderTareas();
