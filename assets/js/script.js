@@ -40,7 +40,7 @@ function renderTareas() {
                 <input class='check' type='checkbox' ${isChecked} data-id='${tarea.id}'>
             </td>
             <td>
-                <button onclick='borrar(${tarea.id})'>Borrar Tarea</button>
+                <button id='btnBorrar' class='btn btn-danger' onclick='borrar(${tarea.id})'>Borrar Tarea</button>
             </td>
         </tr>
         `;
@@ -97,7 +97,6 @@ function getCheckedCount() {
             contador++;
         }
     });
-    console.log(contador);
     return contador;
 }
 
